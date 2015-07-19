@@ -2,19 +2,19 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Ops All Day</title>
-    <link>http://c.ruatta.io/</link>
+    <link>http://cruatta.github.io/</link>
     <description>Recent content on Ops All Day</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Sat, 18 Jul 2015 10:25:13 -0700</lastBuildDate>
-    <atom:link href="http://c.ruatta.io/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://cruatta.github.io/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Advanced package dependencies in Salt</title>
-      <link>http://c.ruatta.io/post/advanced-dependencies-salt/</link>
+      <link>http://cruatta.github.io/post/advanced-dependencies-salt/</link>
       <pubDate>Sat, 18 Jul 2015 10:25:13 -0700</pubDate>
       
-      <guid>http://c.ruatta.io/post/advanced-dependencies-salt/</guid>
+      <guid>http://cruatta.github.io/post/advanced-dependencies-salt/</guid>
       <description>&lt;p&gt;Linux package management systems like dpkg and rpm provide a way to declare relationships between system packages. A package gitfoo can declare git &amp;gt;= 1.0.0 as a dependency and when installed, a package manager like yum will automatically find a package to install that satisfies that dependency. Similar to how these package management systems work, declaring requisite relationships between packages can be done using SaltStack states. Simple requirements are easy to define, but can we mimic the more complicated &lt;a href=&#34;http://docs.fedoraproject.org/en-US/Fedora_Draft_Documentation/0.1/html/RPM_Guide/ch-advanced-packaging.html#id860373&#34;&gt;&amp;ldquo;Provides&amp;rdquo;, &amp;ldquo;Conflicts&amp;rdquo;, and &amp;ldquo;Obsoletes&amp;rdquo;&lt;/a&gt; relationships that RPMs have using just Salt states? Using gitfoo for an exemplary case, we would start by writing a state to install it and git 1.7.7. The gitfoo package will require that git is installed before it is using Salt&amp;rsquo;s &lt;a href=&#34;http://docs.saltstack.com/en/latest/ref/states/requisites.html#require&#34;&gt;require&lt;/a&gt; state argument.&lt;/p&gt;
 
 &lt;p&gt;&lt;code&gt;git/init.sls&lt;/code&gt;&lt;/p&gt;
