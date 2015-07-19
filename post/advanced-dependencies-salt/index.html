@@ -1,0 +1,241 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  
+  <meta charset="UTF-8">
+  <title>
+    Advanced package dependencies in Salt | Ops All Day
+  </title>
+
+
+  
+  <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
+
+
+  
+  <link rel="stylesheet" href="/css/sanitize.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/highlight_monokai.css">
+  <link rel="stylesheet/less" href="/css/theme.less">
+  <link rel="stylesheet" href="/css/custom.css">
+
+
+  
+  <script src="/js/less.js" type="text/javascript"></script>
+
+
+</head>
+
+
+
+<body>
+<div class="container">
+
+  
+  <header role="banner">
+    <div class="row gutters">
+      <div id="site-title" class="col span_6">
+        <h1><a href="/">Ops All Day</a></h1>
+        
+      </div>
+      <div id="social" class="col span_6">
+        <ul>
+	  
+	  <li><a href="https://www.linkedin.com/in/cruatta" target="_blank">LinkedIn</a></li>
+          
+          
+          <li><a href="https://github.com/cruatta" target="_blank">GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+
+  
+  <main id="single" role="main">
+    <div class="article-header">
+      <h1>Advanced package dependencies in Salt</h1>
+      <div class="meta">
+        Jul 18, 2015 &nbsp;
+        
+      </div>
+    </div>
+    <article>
+      <p>Linux package management systems like dpkg and rpm provide a way to declare relationships between system packages. A package gitfoo can declare git &gt;= 1.0.0 as a dependency and when installed, a package manager like yum will automatically find a package to install that satisfies that dependency. Similar to how these package management systems work, declaring requisite relationships between packages can be done using SaltStack states. Simple requirements are easy to define, but can we mimic the more complicated <a href="http://docs.fedoraproject.org/en-US/Fedora_Draft_Documentation/0.1/html/RPM_Guide/ch-advanced-packaging.html#id860373">&ldquo;Provides&rdquo;, &ldquo;Conflicts&rdquo;, and &ldquo;Obsoletes&rdquo;</a> relationships that RPMs have using just Salt states? Using gitfoo for an exemplary case, we would start by writing a state to install it and git 1.7.7. The gitfoo package will require that git is installed before it is using Salt&rsquo;s <a href="http://docs.saltstack.com/en/latest/ref/states/requisites.html#require">require</a> state argument.</p>
+
+<p><code>git/init.sls</code></p>
+
+<pre><code class="language-sql">git:
+  pkg.installed:
+    - name: git
+</code></pre>
+
+<p><code>gitfoo/init.sls</code></p>
+
+<pre><code class="language-sql">include:
+  - git
+
+gitfoo:
+  pkg.installed:
+   - name: gitfoo
+   - require:
+     - pkg: git
+</code></pre>
+
+<p>Now, what if we want to install gitlab which (we&rsquo;ll pretend) requires git 2.4.5? Let’s write states for these. In CentOS 6, the git 2.4.5 package is provided by a package named git2u so we’ll install that with a new Salt state.</p>
+
+<p><code>git2u/init.sls</code></p>
+
+<pre><code class="language-sql">git2u:
+  pkg.installed:
+    - name: git2u
+</code></pre>
+
+<p><code>gitlab/init.sls</code></p>
+
+<pre><code class="language-sql">include:
+  - git2u
+
+gitlab:
+  pkg.installed:
+    - name: gitlab
+    - require:
+      - pkg: git2u
+</code></pre>
+
+<p>What happens if we want to install gitlab and gitfoo on the same server? Unfortunately, the git2u package will conflict with the git package. Applying either the gitfoo or gitlab state will fail depending on which version of git is installed first. In this situation, we really only need git2u since gitfoo just needs a version of git greater than 1.0.0. We can change our Salt states to accommodate our needs using the <a href="http://docs.saltstack.com/en/latest/ref/states/requisites.html#unless">unless</a> state argument.</p>
+
+<p><code>git/init.sls</code></p>
+
+<pre><code class="language-sql">git:
+  pkg.installed:
+    - name: git
+    - unless:
+      - which git
+</code></pre>
+
+<p>Now, this state will only try to install git 1.7.7 if the command <code>which git</code> returns something other than <code>0</code>. If there is a git executable already in the minion&rsquo;s <code>$PATH</code>, the unless execution will succeed and all requisite states that depend on it will continue to happily run knowing that a git executable is installed. By adding the unless argument, we&rsquo;ve successfully duplicated in Salt what RPMs can do with &ldquo;<strong>Provides</strong>&rdquo;. Now, we can change our git2u state to remove the older version of git safely. When git2u replaces git and provides the same capabilities as the older package, the state mimics RPM &ldquo;<strong>Obsoletes</strong>&rdquo;.</p>
+
+<p><code>git/removed.sls</code></p>
+
+<pre><code class="language-sql">git:
+  pkg.removed:
+    - name: git
+</code></pre>
+
+<p><code>git2u/init.sls</code></p>
+
+<pre><code class="language-sql">include:
+  - git.removed
+
+git2u:
+  pkg.installed:
+    - name: git2u
+    - require:
+      - pkg: git
+</code></pre>
+
+<p>If any state requires some version of git, we can safely include the git state and not worry about git2u being removed.</p>
+
+<p>What if we want to ensure that only one of our git versions is ever installed in a single state run? We can do this by changing the ID of our git2u <code>pkg.installed</code> state to <code>git</code>. Changing the ID of the git <code>pkg.removed</code> state to <code>git17</code> is required because we want to be able to include this in the git2u state without the IDs conflicting.</p>
+
+<p><code>git/removed.sls</code></p>
+
+<pre><code class="language-sql">git17:
+  pkg.removed:
+    - name: git
+</code></pre>
+
+<p><code>git2u/init.sls</code></p>
+
+<pre><code class="language-sql">include:
+  - git.removed
+
+git:
+  pkg.installed:
+    - name: git2u
+    - require:
+      - pkg: git17
+</code></pre>
+
+<p>Next, we need to create a state to remove git2u and include that state in the git state. We&rsquo;re also going to remove the unless argument as well so Salt will always try to install the git package.</p>
+
+<p><code>git2u/removed.sls</code></p>
+
+<pre><code class="language-sql">git2u:
+  pkg.removed:
+    - name: git2u
+</code></pre>
+
+<p><code>git/init.sls</code></p>
+
+<pre><code class="language-sql">include:
+  - git2u.removed
+
+git:
+  pkg.installed:
+    - name: git
+    - require:
+      - pkg: git2u
+</code></pre>
+
+<p>Now, if we try to apply both the git2u and git states in the same state run, Salt will let us know there&rsquo;s an issue with conflicting SLS IDs and won&rsquo;t continue.</p>
+
+<pre><code class="language-shell">[root@localhost salt]# cat top.sls
+base:
+  '*':
+    - git
+    - git2u
+</code></pre>
+
+<pre><code class="language-shell">[root@localhost salt]# salt-call state.highstate -l warning
+local:
+    Data failed to compile:
+----------
+    Detected conflicting IDs, SLS IDs need to be globally unique.
+    The conflicting ID is 'git' and is found in SLS 'base:git' and SLS 'base:git2u'
+</code></pre>
+
+<p>Why is this the case? The <code>pkg.installed</code> states for both git2u and git have the same SLS IDs (git) which causes a conflict in the Salt state tree. This ensures that during a state run only one of these states can be executed. With this property, our states have the &ldquo;<strong>Conflicts</strong>&rdquo; relationship that many package managers provide.</p>
+
+    </article>
+    
+
+
+<script type="text/javascript">
+     
+    var disqus_shortname = '';
+
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+  </main>
+
+
+  
+  <footer role="contentinfo">
+    <div style="text-align:center;">
+      
+      A tech blog by Cameron Ruatta
+    </div>
+  </footer>
+
+
+</div>
+
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+</body>
+</html>
+
