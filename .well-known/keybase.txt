@@ -1,0 +1,55 @@
+==================================================================
+https://keybase.io/cruatta
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://c.ruatta.com
+  * I am cruatta (https://keybase.io/cruatta) on keybase.
+  * I have a public key ASCqsLW55H5Ez5T4JL3WEBKfhlEAk1IUXPqfCyrD-g2CgAo
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "0120aab0b5b9e47e44cf94f824bdd610129f8651009352145cfa9f0b2ac3fa0d82800a",
+      "host": "keybase.io",
+      "kid": "0120aab0b5b9e47e44cf94f824bdd610129f8651009352145cfa9f0b2ac3fa0d82800a",
+      "uid": "084663761d12111a98894bd64db57719",
+      "username": "cruatta"
+    },
+    "merkle_root": {
+      "ctime": 1514842131,
+      "hash": "72461d8cf3acc441d60f2a7740d670ebd87819a105ead6add3645fbeab7d05307a65aae85c76a63daa8790a628b8c3839c736dbb494ddb472d296f4ea5d9f77a",
+      "hash_meta": "a3af90e7218c8756b79534919d29fbe313de4d5e1c7ca400a16bcad2dd9711cb",
+      "seqno": 1875569
+    },
+    "service": {
+      "hostname": "c.ruatta.com",
+      "protocol": "https:"
+    },
+    "type": "web_service_binding",
+    "version": 1
+  },
+  "client": {
+    "name": "keybase.io go client",
+    "version": "1.0.38"
+  },
+  "ctime": 1514842148,
+  "expire_in": 504576000,
+  "prev": "c68f40dd15b6840f9d9b1969ac2f11fad223bbcac02e4329ba6cc1ab37968b1c",
+  "seqno": 15,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+hKRib2R5hqhkZXRhY2hlZMOpaGFzaF90eXBlCqNrZXnEIwEgqrC1ueR+RM+U+CS91hASn4ZRAJNSFFz6nwsqw/oNgoAKp3BheWxvYWTFA0R7ImJvZHkiOnsia2V5Ijp7ImVsZGVzdF9raWQiOiIwMTIwYWFiMGI1YjllNDdlNDRjZjk0ZjgyNGJkZDYxMDEyOWY4NjUxMDA5MzUyMTQ1Y2ZhOWYwYjJhYzNmYTBkODI4MDBhIiwiaG9zdCI6ImtleWJhc2UuaW8iLCJraWQiOiIwMTIwYWFiMGI1YjllNDdlNDRjZjk0ZjgyNGJkZDYxMDEyOWY4NjUxMDA5MzUyMTQ1Y2ZhOWYwYjJhYzNmYTBkODI4MDBhIiwidWlkIjoiMDg0NjYzNzYxZDEyMTExYTk4ODk0YmQ2NGRiNTc3MTkiLCJ1c2VybmFtZSI6ImNydWF0dGEifSwibWVya2xlX3Jvb3QiOnsiY3RpbWUiOjE1MTQ4NDIxMzEsImhhc2giOiI3MjQ2MWQ4Y2YzYWNjNDQxZDYwZjJhNzc0MGQ2NzBlYmQ4NzgxOWExMDVlYWQ2YWRkMzY0NWZiZWFiN2QwNTMwN2E2NWFhZTg1Yzc2YTYzZGFhODc5MGE2MjhiOGMzODM5YzczNmRiYjQ5NGRkYjQ3MmQyOTZmNGVhNWQ5Zjc3YSIsImhhc2hfbWV0YSI6ImEzYWY5MGU3MjE4Yzg3NTZiNzk1MzQ5MTlkMjlmYmUzMTNkZTRkNWUxYzdjYTQwMGExNmJjYWQyZGQ5NzExY2IiLCJzZXFubyI6MTg3NTU2OX0sInNlcnZpY2UiOnsiaG9zdG5hbWUiOiJjLnJ1YXR0YS5jb20iLCJwcm90b2NvbCI6Imh0dHBzOiJ9LCJ0eXBlIjoid2ViX3NlcnZpY2VfYmluZGluZyIsInZlcnNpb24iOjF9LCJjbGllbnQiOnsibmFtZSI6ImtleWJhc2UuaW8gZ28gY2xpZW50IiwidmVyc2lvbiI6IjEuMC4zOCJ9LCJjdGltZSI6MTUxNDg0MjE0OCwiZXhwaXJlX2luIjo1MDQ1NzYwMDAsInByZXYiOiJjNjhmNDBkZDE1YjY4NDBmOWQ5YjE5NjlhYzJmMTFmYWQyMjNiYmNhYzAyZTQzMjliYTZjYzFhYjM3OTY4YjFjIiwic2Vxbm8iOjE1LCJ0YWciOiJzaWduYXR1cmUifaNzaWfEQN25YSM9H+tO3JltlqEvGwhkXVgvu7aF1637pWRgldZeWCeP+KYtU1mpjiAkDgBpf+6S9ZKVNr45sJgTJ7vPGAaoc2lnX3R5cGUgpGhhc2iCpHR5cGUIpXZhbHVlxCCjK8wdeFSPMaqQ0rk1HsUdSswDoHOuH9nd4y0OPL8zAKN0YWfNAgKndmVyc2lvbgE=
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/cruatta
+
+==================================================================
