@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Security on Cameron Ruatta</title><link>https://c.ruatta.com/tags/security/</link><description>Recent content in Security on Cameron Ruatta</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 28 Apr 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://c.ruatta.com/tags/security/index.xml" rel="self" type="application/rss+xml"/><item><title>CTF DC-1</title><link>https://c.ruatta.com/posts/dc1/</link><pubDate>Sun, 28 Apr 2019 00:00:00 +0000</pubDate><guid>https://c.ruatta.com/posts/dc1/</guid><description>http://www.five86.com/dc-1.html
+Warning: Contains spoilers for this CTF
+Times Start time: ~19:00 04/27/2019
+End time: ~11:00 04/28/2018
+I did get some sleep between the two days ;)
+Background My first CTF on my own! I&amp;rsquo;m part of a group of developers at Credit Karma, where I currently work, who voluntarily participate in security trainings where we learn offensive security techniques from our AppSec team. We&amp;rsquo;ve done individual challenges, like executing a XSS on a vulnerable form or performing SQLi to change a password on a vulnerable website, but I&amp;rsquo;ve never done a CTF before.</description></item></channel></rss>
